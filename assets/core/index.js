@@ -533,7 +533,7 @@ const txtBankObj = {
 
    let txtBank;// = txtBankObj.PL;
         
-    const manifestObj = {
+/*     const manifestObj = {
       "name": "Local Password Manager ver.1.0",
       "short_name": "LPM",
       "description": "Manage You Passwords Locally",
@@ -591,7 +591,7 @@ const txtBankObj = {
     };
     const manifestString = JSON.stringify(manifestObj);
     const manifestBlob = new Blob([manifestString], {type: "application/json"});
-    const manifestUrl = window.URL.createObjectURL(manifestBlob);
+    const manifestUrl = window.URL.createObjectURL(manifestBlob); */
     // ----------------------------------- End Manifest -----------------------------------------------------//
     
     Date.prototype.toUKstring = function(){
@@ -2135,7 +2135,7 @@ let appStartFailCount = 0;
         
         emergDb.on("click", getEmergencyHtml);
 
-        manifest.setAttr("href", manifestUrl);//window.URL.revokeObjectURL(manifestUrl);
+       // manifest.setAttr("href", manifestUrl);
 
 /* ------------------------------------------------------------------------------*/
 
