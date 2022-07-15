@@ -6,6 +6,8 @@ const appCaches = [
             './index.html',
             './assets/core/index.js',
             './assets/core/dbx.min.js',
+            './assets/core/terra.js',
+            './assets/core/bundle.js.map',
             './assets/core/index.css'
         ]
     },
