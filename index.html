@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<!-- https://kangax.github.io/html-minifier/ -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Local Password Manager">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <meta name="HandheldFriendly" content="true"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="theme-color" content="#fafafa">
+  <meta name="msapplication-TileColor" content="#fafafa">
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/static/favicons/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/static/favicons/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/static/favicons/apple-touch-icon.png">
+  <link rel="mask-icon" href="assets/static/favicons/safari-pinned-tab.svg" color="#fafafa">
+
+  <link rel="manifest" id="manifest"> <!--href="lpm.json" href="lpm.webmanifest" -->
+  
+  <link rel="stylesheet" href="assets/core/index.css" media="all" type="text/css">
+  <script src="assets/core/dbx.min.js" defer></script>
+  <script src="assets/core/terra.js" defer></script>
+  <script src="assets/core/index.js" defer></script>
+
+
+  <title>LPM</title>
+</head>
+<body>
+
+  <div id='infoLine'>Please Press the Icon to Load the Database File...</div>
+  
+  <section id="listWrp" class="fullScreen elNoDisplay">
+    <div id="vListTaskBarWrp">
+        <div id="vListTaskBar">
+          <div title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="detsDatesIcon" class="svgIcon listIcon elDimmed"></div>
+          <div title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="detsNotesIcon" class="svgIcon listIcon elDimmed"></div>
+          <div title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="detsTagsIcon" class="svgIcon listIcon elDimmed"></div>
+          <span class="divider"></span>
+          <div title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="typeNoteIcon" class="svgIcon listIcon"></div>
+          <div title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="typeLogIcon" class="svgIcon listIcon"></div>
+          <span class="divider"></span>
+          <div title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="vTaskSwitch" class="taskSwitchSort svgIcon listIcon"></div>
+          <span class="divider"></span>
+        </div>
+        
+        <div id="vListSortBar">
+          <div title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="vSortCr8" class="vSortCr8Desc svgIcon listIcon sortIcon elDimmed"></div>
+          <div title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="vSortMod" class="vSortModDesc svgIcon listIcon sortIcon elDimmed"></div>
+          <div title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="vSortName" class="vSortNameAsc svgIcon listIcon sortIcon elDimmed"></div>
+          <!--            -->
+        </div>
+    </div>
+    <div id="addVendorBtn" class="svgIcon listIcon"></div>
+  <div id="listScrollWrp" class="listScrollWrp">
+    <div id="vList"> </div>
+    <div id="appTaskbarWrp">
+      <div id="appTaskbar" class="center">
+          <label id="inputBoxSearchBtn" class="searchBtnShow svgIcon absoluteIcon listIcon" for="inputBoxSearch"></label>
+          <div class="syncIconWrp">
+            <label id="syncLocalIcon" class="svgIcon syncIcon listIcon localIcon"></label>
+            <label id="syncDbxFileIcon" class="svgIcon syncIcon listIcon dbxFileIcon"></label>
+            <label id="syncLocalFileIcon" class="svgIcon syncIcon listIcon localFileIcon"></label>
+          </div>
+          <!-- <label title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="changeMasterPassBtn" class="absoluteIcon svgIcon listIcon"></label> -->
+          <label id="moreMenu" class="svgIcon listIcon absoluteIcon moreMenu" for="resetSearch"></label>
+          <label id="inputBoxResetBtn" class="searchBtnReset svgIcon listIcon absoluteIcon elNoDisplay" for="resetSearch"></label>
+          
+          <!-- <div id="reloadAppBtn" class="svgIcon listIcon absoluteIcon"></div> -->
+          <form id="searchForm" class="searchFormHide">
+            <input id="inputBoxSearch" type="text" placeholder="Search">
+            <input id="resetSearch" class="elNoDisplay" type="reset" value=""> 
+          </form>
+      </div>
+      
+      
+      <div id="appMoreTaskbar" class="center elSlideCenterUp">
+<!--           <label id="inputBoxSearchBtn2" class="searchBtnShow svgIcon absoluteIcon listIcon" for="inputBoxSearch"></label>
+          <label title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="changeMasterPassBtn2" class="absoluteIcon svgIcon listIcon vSortNameAsc"></label> -->
+          <label title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="reloadApp" class="reloadApp svgIcon listIcon absoluteIcon"></label>
+          <div class="syncIconWrp">
+            <label title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="changeMasterPassBtn" class="svgIcon listIcon"></label>
+            <label title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="donate" class="svgIcon listIcon"></label>
+            <label title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="emergDb" class="syncIcon emergDb svgIcon listIcon"></label>
+            <label title="!!!!!!!XXXXX TITLE XXXXXXX!!!!!!!!!!!!" id="changeLang" class="svgIcon listIcon langGB"></label>
+          </div>
+          <label id="moreTaskbarClose" class="searchBtnReset svgIcon listIcon absoluteIcon" for="resetSearch"></label>
+
+      </div>
+      
+    </div>
+  </div>
+  </section>
+
+  <section id="inputFormWrp" class="fullScreen elSlideOut elNoDisplay">
+    <form id="inputForm" class="inputForm">
+      <div id="formHead" class="formSection  nf ef df nn en dn">
+        <label id="submitLabel" class="svgIcon absoluteIcon nf ef nn en" for="submForm"></label>
+        <input id="submForm" class="elNoDisplay" type="submit" name="submForm">
+
+        <label id="editFormBtn" class="svgIcon absoluteIcon df"></label>
+        <label id="editNoteBtn" class="svgIcon absoluteIcon dn"></label>
+        
+        <div id="formTitle"></div>  <!-- class="nf ef df nn en dn" -->
+
+        <label id="btnCloseForm" class="svgIcon absoluteIcon nf ef df nn en dn"></label>
+        
+        <div id="recordModWrp" class="recordModWrp df dn">
+          <div class="df dn recordDate"><span id="vCr8DateLabel"></span><span id="recordCr8Date"></span></div>
+          <label id="formIcon" class="svgIcon absoluteIcon dn df"></label>
+          <div class="df dn recordDate"><span id="recordModDate"></span><span id="vModDateLabel"></span></div>
+        </div>
+      </div>
+
+      <div id="formSvName" class="formSection  nf ef df nn en dn">
+        <label id="formLabelName" class="formLabel inputBoxLabel nf ef df nn en dn" for="inputBoxName">Name:</label>    
+        <input id="inputBoxName" class="nf ef df nn en dn" type="text" placeholder="Name..." required name="inputBoxName">
+      </div>
+      
+      <div id="formSvLog" class="formSection nf ef df">
+        <label id="formLabelLog" class="formLabel inputBoxLabel nf ef df" for="inputBoxLog">Login:</label>    
+        <input id="inputBoxLog" class="inputBoxLog nf ef df" type="text" placeholder="Login..." name="inputBoxLog">
+        <label id="copyLogBtn" class="svgIcon absoluteIcon rightAlign copyClipboard df"></label>
+      </div>
+
+      <div id="formSvPass" class="formSection ef df">
+        <label id="formLabelPass" class="formLabel inputBoxLabel ef df" for="inputBoxPass">Password:</label>
+        <label id="showPassToggleBtn" class="passEye svgIcon absoluteIcon df"></label>
+        <label id="newPassBtn" class="svgIcon absoluteIcon ef"></label>
+        <input id="inputBoxPass" class="passBox ef df" type="password" disabled="disabled" name="inputBoxPass">
+        <label id="copyPassBtn" class="svgIcon absoluteIcon rightAlign copyClipboard df"></label>
+      </div>
+      
+      <div id="formAlphaNum" class="formSection nf ef">
+        <label id="formLabelAlphaNum" class="formLabel inputBoxLabel nf ef" for="inputBoxAlphaNum">Alphanumeric only password (no special characters):</label>
+        <input id="inputBoxAlphaNum" class="inputBoxAlphaNum absoluteIcon nf ef" type="checkbox" name="inputBoxAlphaNum">
+      </div>
+            
+      <div id="formSvOldPas" class="formSection df">
+        <label id="formLabelOldPass" class="formLabel inputBoxLabel df" for="inputBoxOldPass">Old Password:</label>
+        <input id="inputBoxOldPass" class="df" type="text" disabled="disabled" name="inputBoxOldPass">
+        <label id="copyOldPassBtn" class="svgIcon absoluteIcon rightAlign copyClipboard df"></label>
+      </div>
+      
+      <div id="formSvNote" class="formSection nf ef df nn en dn">
+        <label id="formLabelNote" class="formLabel inputBoxLabel nf ef df nn en dn" for="inputBoxNote">Note:</label>
+        <textarea id="inputBoxNote" class="nf ef df nn en dn" type="text" placeholder="Notes..."></textarea>
+      </div>
+      
+      <div id="formSvLink" class="formSection nf ef df">
+        <label class="formLabel inputBoxLabel nf ef df" for="inputBoxUrl">URL:</label>
+        <input id="inputBoxUrl" class="nf ef df" type="url" placeholder="https://example.com/login" pattern="https://.*" size="30" name="inputBoxUrl">
+        <a id="vendUrl" class="df" href="https://192.168.1.76/" target="_blank" rel="noreferrer"><label id="openLinkBtn" class="svgIcon absoluteIcon rightAlign df"></label></a>
+      </div>
+      
+      <div id="formSvTag" class="formSection nf ef df nn en dn">
+        <label id="formLabelTags" class="formLabel inputBoxLabel nf ef df nn en dn" for="inputBoxTags">Tags:</label>    
+        <input id="inputBoxTags" class="nf ef df nn en dn" type="text" placeholder="Tags..." name="inputBoxTags">
+      </div>
+
+
+    </form>
+      <div id="formFoot" class="ef nf en nn">
+        <div id="deleteWrp" class="ef en">
+          <label id="deleteVendorBtn" class="svgIcon absoluteIcon formFootIcon rightAlign ef en"></label>
+        </div>
+        <div id="toggleNoteWrp" class="ef nf en nn">
+          <label id="toggleNoteBtn" for="toggleNoteChBox" class="toggleToNote svgIcon absoluteIcon formFootIcon"></label>
+          <input type="checkbox" id="toggleNoteChBox" class="elNoDisplay" name="toggleNoteChBox">
+        </div>
+<!--         <p id="changeToLogin" class="en nn">
+          <label id="changeToLoginBtn" class="svgIcon absoluteIcon en nn"></label>
+        </p> -->
+      </div>    
+  
+  </section>
+  <!-- ef= edit Login; df= display Login; nf= new Login; en= edit Login; dn= display Login; nn= new Login;-->
+  
+  <div id="dbModified"></div>
+  
+  <section id="masterPasFormWrp" class="fullScreen elNoDisplay">
+    <label id="mpClose" class="svgIcon masterPassIcon loadIcon floatIcon"></label>
+    <label id="newDb" class="svgIcon masterPassIcon elNoDisplay loadIcon floatIcon newDbIcon"></label>
+    <div id="masterPasFormTitle">Unlock Existing Database</div>
+    <div class="iconContainer elNoEvent">
+      <label id="mpNewDb" class="svgIcon masterPassIcon elNoDisplay newDbIcon"></label>
+      <label id="mpLocal" class="svgIcon masterPassIcon loadIcon localIcon"></label>
+      <label id="mpDbxFile" class="svgIcon masterPassIcon loadIcon dbxFileIcon"></label>
+      <label id="mpLocalFile" class="svgIcon masterPassIcon loadIcon localFileIcon"></label>
+      <label id="mpChange" class="svgIcon masterPassIcon elNoDisplay"></label>
+    </div>
+
+    <form id="masterPasForm">
+      <label id="masterPasFormLabel" class="formLabel" for="masterPasInputBox">Enter your password...</label>
+      <input id="masterPasInputBox" class="passBox" type="password" placeholder="***********" autofocus required>
+      <label id="showMPassToggleBtn" class="passEye svgIcon absoluteIcon"></label>
+      <input class="elNoDisplay" type="submit">
+    </form>
+  </section>
+  
+  <section id="donateWrp" class="fullScreen elNoDisplay"></section>
+
+  <section id="loadDbWrp" class="fullScreen elNoDisplay">
+    <div class="iconContainer vAlign">
+      <label id="loadNewDb" class="svgIcon masterPassIcon newDbIcon"></label>
+      <label id="loadDbxFile" class="svgIcon masterPassIcon loadIcon dbxFileIcon"></label>
+      <label id="loadLocalFile" class="svgIcon masterPassIcon loadIcon localFileIcon"></label>
+    </div>
+    <div id="consent">The App is in the Private Mode.<br><br>Click to enable App Storage.</div>
+    <div id="revokeConsent" class="elNoDisplay">The App is in the Private Mode.<br>Click to enable App Storage.</div>
+  </section>
+  
+  <section id="alertSection" class="fullScreen elSlideOut elNoDisplay">
+  <div id="closeAlert" class="svgIcon floatIcon"></div>
+    <div id="alertTable">
+        <div id="alertWrp" class="alertWrp">
+            <div id="alertIcon" class="svgIcon"></div>
+            <div id="alertGeneraltMsg" class="alertGeneraltMsg"></div>
+            <div id="alertChoiceWrp">
+                <div id="alertAcceptMsg" class="alertAcceptMsg alertChoice"></div><!--
+            --><div id="alertDenyMsg" class="alertDenyMsg alertChoice"></div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+  <div id="working" class="elNoDisplay"><div id="circle"><div class="lds-dual-ring"></div></div></div>
+
+</body>
+
+</html>
