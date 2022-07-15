@@ -13,7 +13,7 @@ const appCaches = [
         name: 'static_1.415',
         urls: [
             './favicon.ico',
-            './lpm.json',
+            './lpm.webmanifest',
             './browserconfig.xml',
             './assets/static/icons/micon-48x48.png',
             './assets/static/icons/micon-72x72.png',
