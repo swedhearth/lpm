@@ -2572,7 +2572,7 @@ let appStartFailCount = 0;
             }
         }
 
-        navigator.serviceWorker.register('service-worker.js', {scope: '/'}).then(reg => {
+        navigator.serviceWorker.register('service-worker.js', {scope: '/lpm/'}).then(reg => {
             reg.addEventListener('updatefound', _ => 
                 reg.installing.addEventListener('statechange', onstateChange)
             );
