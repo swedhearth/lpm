@@ -2624,6 +2624,7 @@ let appStartFailCount = 0;
             
             console.log(terra);
             console.log(Terra); */
+            console.log(terraWallets);
         },10000);
         
 })();
