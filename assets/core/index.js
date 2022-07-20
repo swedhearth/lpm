@@ -841,13 +841,14 @@ const txtBankObj = {
     };
     /* APP -------------------------------------------------------------------------- */
     function App(){
+        this.URL = window.location.origin;//"https://swedhearth.github.io/lpm/";"https://www.havetogoto.co.uk/"
         this.consent = false;
         this.pendingPromise = null;
         let _encodedDb = null;
         const _getNewEncodedDb = _ => _encodedDb = getEncodedU8Ary(JSON.stringify(this.dbObj));
 
         this.urlReplace = url => {if(url) location.replace(url);};
-        this.reload = _ => this.urlReplace(location);// this.urlReplace("https://www.havetogoto.co.uk/"); //  Reload App ************** Make Hard Coded = "https://havetogoto.co.uk"
+        this.reload = _ => this.urlReplace(this.URL);// this.urlReplace("https://www.havetogoto.co.uk/"); //  Reload App ************** Make Hard Coded = "https://havetogoto.co.uk"
         this.getEncodedDb = async _ => _encodedDb = _encodedDb || _getNewEncodedDb();
         this.getDbFileBlob = _ => this.getEncodedDb().then(encodedDb => new Blob([encodedDb.buffer], {type:"application/octet-stream"}));
         this.setDbObj = function(dbObj){
@@ -2234,7 +2235,7 @@ let appStartFailCount = 0;
 /* ------------------------------------------------------------------------------*/
     function DbxFile (thisApp){
         const CLIENT_ID = '02fhhbs8a911871';
-        const REDIRECT_URI = "https://www.havetogoto.co.uk/";
+        const REDIRECT_URI = thisApp.URL; //"https://swedhearth.github.io/lpm/";
         const timeoutMsec = 5000;
         const dbxAuth = new Dropbox.DropboxAuth({
             clientId: CLIENT_ID,
@@ -2578,13 +2579,16 @@ let appStartFailCount = 0;
                 reg.installing.addEventListener('statechange', onstateChange)
             );
             reg.update().catch(e => {
-                //app.message.fail(e);
-                if(!window.location.search.substring(1).length < 6){
+                    console.log(e);                
+                if(window.confirm("Service Worker Update Failure. Reload App?"){
+                    location.replace(app.URL);
+                }
+/*                 if(!window.location.search.substring(1).length < 6){
                     deleteCookies();
                     working.show();
                     app.message.error("Fixing bad redirect... Will be a moment....");
                     location.replace("https://www.havetogoto.co.uk/?i=1");
-                };
+                }; */
             });
         }).catch(e => {
             console.log("catch register('service-worker.js')", e);
