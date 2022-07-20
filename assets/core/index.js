@@ -841,7 +841,7 @@ const txtBankObj = {
     };
     /* APP -------------------------------------------------------------------------- */
     function App(){
-        this.URL = window.location.origin;//"https://swedhearth.github.io/lpm/";"https://www.havetogoto.co.uk/"
+        this.URL = window.location.origin + window.location.pathname;//"https://swedhearth.github.io/lpm/";"https://www.havetogoto.co.uk/"
         this.consent = false;
         this.pendingPromise = null;
         let _encodedDb = null;
@@ -2542,7 +2542,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.503 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.505 ---------------------", true));
     
 
     
