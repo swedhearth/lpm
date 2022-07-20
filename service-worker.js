@@ -1,6 +1,6 @@
 const appCaches = [
     {
-        name: 'core_1.416_GitHub',
+        name: 'core_1.501_GitHub',
         urls: [
             './',
             './index.html',
@@ -12,7 +12,7 @@ const appCaches = [
         ]
     },
     {
-        name: 'static_1.416',
+        name: 'static_1.501',
         urls: [
             './favicon.ico',
             './lpm.webmanifest',

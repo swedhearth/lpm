@@ -2204,7 +2204,8 @@ let appStartFailCount = 0;
         storeObj.connect = async storeDbObj =>{
             storeObj.dbMod = storeDbObj.mod;
             if(storeObj.dbMod !== thisApp.dbObj.mod){
-               if(!await thisApp.alert.update(storeObj, thisApp.dbObj.mod)){
+               if(storeObj.dbMod > thisApp.dbObj.mod){
+               //if(!await thisApp.alert.update(storeObj, thisApp.dbObj.mod)){
                     await thisApp.setDbObj(storeDbObj);
                 }
                 await thisApp.dbStoreUpdateAll(null, false).then(_ => thisApp.paint(true));
@@ -2540,7 +2541,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.415 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.501 ---------------------", true));
     
 
     
