@@ -2542,7 +2542,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.501 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.503 ---------------------", true));
     
 
     
@@ -2580,7 +2580,7 @@ let appStartFailCount = 0;
             );
             reg.update().catch(e => {
                     console.log(e);                
-                if(window.confirm("Service Worker Update Failure. Reload App?"){
+                if(window.confirm("Service Worker Update Failure. Reload App?")){
                     location.replace(app.URL);
                 }
 /*                 if(!window.location.search.substring(1).length < 6){

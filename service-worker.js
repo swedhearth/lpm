@@ -1,6 +1,6 @@
 const appCaches = [
     {
-        name: 'core_1.502_GitHub',
+        name: 'core_1.503_GitHub',
         urls: [
             './',
             './index.html',
