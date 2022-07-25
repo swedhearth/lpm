@@ -793,12 +793,12 @@ const txtBankObj = {
 
             if(!window.history.state){ // No history - first visit
                 window.history.pushState({noBackExists: true}, '', '');
-            }else if(!window.history.state.noBackExists){// There is state but not noBackExists - 
+            }else if(!window.history.state.authorising){// There is state but not authorising - 
                 console.log("YES STATE", history);
-                window.history.go(-window.history.length);
+                window.history.go(-1);
                 setTimeout(_=> {
-                    window.history.replaceState(null, '', window.location.pathname);
-                    this.reload
+                    //window.history.replaceState(null, '', window.location.pathname);
+                    this.reload();
                 }, 10000);
                 return false;
             }
@@ -1984,6 +1984,8 @@ let appStartFailCount = 0;
         downloadFile('<!DOCTYPE html>' + doc.documentElement.outerHTML, "lpm_" + new Date().toISOString().slice(0,19).replaceAll(':', '').replace('T', '_') + ".html");
     }
     
+    // -------------------------- Check History --------------------------------------
+    if(!app.checkHistoryState()) return;
     // -------------------------- Add  listeners --------------------------------------
 
         document.addEventListener("visibilitychange", app.visibilitychange());
@@ -2223,7 +2225,7 @@ let appStartFailCount = 0;
                 }
                 if(thisApp.dbObj && thisApp.idxDb) thisApp.idxDb.put("dbxSyncExisting", await thisApp.getEncodedDb());
                 // Set History State Here!!!!!!
-                //window.history.replaceState({authorising: true}, '', window.location.pathname);
+                window.history.replaceState({authorising: true}, '', window.location.pathname);
                 thisApp.urlReplace(authUrl);
             }catch(e){
                 this.catchSync(e).then(e => thisApp.start(e, true));
@@ -2488,7 +2490,7 @@ let appStartFailCount = 0;
     }
 
 /* ------------------------------------------------------------------------------*/
-    if(!app.checkHistoryState()) return;
+    
     
     if(location.host) installServiceWorker(); // Install Service Worker
     
@@ -2496,7 +2498,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.507 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.508 ---------------------", true));
     
 
     
