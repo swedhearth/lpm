@@ -791,29 +791,12 @@ const txtBankObj = {
         
         this.checkHistoryState = _ => {
 
-/*             if(window.history.state){
-                console.log("YES STATE", history);
-                window.history.go(-1);
-                setTimeout(this.reload, 0);
-                
-            }else if(!window.history.state || !window.history.state.noBackExists) {
-                console.log("we are not pushing anything to history");
-                window.history.pushState({noBackExists: true}, '', '');
-            }else{
-                console.log("nothing pushed to history", window.history);
-            } */
-            
-            
             if(!window.history.state){ // No history - first visit
                 window.history.pushState({noBackExists: true}, '', '');
-                return true;
-            }else if(window.history.state.authorising){// Currently authorising redirection - skip
-                console.log("YES STATE - authorising", history);
-                return true;
             }else if(!window.history.state.noBackExists){// There is state but not noBackExists - 
                 console.log("YES STATE", history);
-                window.history.go(-1);
-                setTimeout(this.reload, 0);
+                window.history.go(-window.history.length);
+                setTimeout(this.reload, 100000);
                 return false;
             }
             return true;
@@ -2000,18 +1983,6 @@ let appStartFailCount = 0;
     
     // -------------------------- Add  listeners --------------------------------------
 
-/*     if(window.history.state){
-        console.log("YES STATE", history);
-        window.history.go(-1);
-        setTimeout(app.reload, 0);
-        
-    }else if(!window.history.state || !window.history.state.noBackExists) {
-        console.log("we are not pushing anything to history");
-        window.history.pushState({noBackExists: true}, '', '');
-    }else{
-        console.log("nothing pushed to history", window.history);
-    } */
-
         document.addEventListener("visibilitychange", app.visibilitychange());
         window.addEventListener('popstate', vForm.close);
         window.addEventListener('popstate', supportDonate.close);
@@ -2024,7 +1995,6 @@ let appStartFailCount = 0;
         editNoteBtn.on("click", vForm.editNote);
 
         toggleNoteChBox.on("change", function(e){
-            //console.log(this.checked);
             const formType = e.target.checked ? "typeNote" : "typeLog";
             vForm[formType]();
         });
@@ -2250,7 +2220,7 @@ let appStartFailCount = 0;
                 }
                 if(thisApp.dbObj && thisApp.idxDb) thisApp.idxDb.put("dbxSyncExisting", await thisApp.getEncodedDb());
                 // Set History State Here!!!!!!
-                window.history.replaceState({authorising: true}, '', window.location.pathname);
+                //window.history.replaceState({authorising: true}, '', window.location.pathname);
                 thisApp.urlReplace(authUrl);
             }catch(e){
                 this.catchSync(e).then(e => thisApp.start(e, true));
@@ -2316,8 +2286,7 @@ let appStartFailCount = 0;
         const redirect = async _ => {
             if(!thisApp.online) return this.syncPause().then(thisApp.alert.offline);
             const urlSearchParams = Object.fromEntries(new URLSearchParams(window.location.search.substring(1)));
-            //window.history.replaceState(null, null, window.location.pathname);
-            /* console.log(urlSearchParams); */
+
             //if(urlSearchParams.error || !urlSearchParams.code) return null;
             let dbxCodeVerifier = null;
             if(urlSearchParams.code){
@@ -2524,7 +2493,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.505 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.506 ---------------------", true));
     
 
     
