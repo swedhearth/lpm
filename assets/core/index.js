@@ -792,10 +792,13 @@ const txtBankObj = {
         this.checkHistoryState = _ => {
 
             if(!window.history.state){ // No history - first visit
+                window.history.replaceState({virgin: true}, '', '');
+                window.history.pushState({noBackExists: true}, '', '');
+            }else if(window.history.state.virgin){// InitialState - beyond that is exit
                 window.history.pushState({noBackExists: true}, '', '');
             }else if(!window.history.state.authorising){// There is state but not authorising - 
-                const goBack = window.history.state.authorised ? 3 : 2
-                console.log("YES STATE", history, goBack);
+            const goBack = window.history.state.authorised ? 2 : 1;
+                console.log("YES STATE", history);
                 window.history.go(-goBack);
                 setTimeout(_=> {
                     //window.history.replaceState(null, '', window.location.pathname);
@@ -1450,7 +1453,7 @@ let appStartFailCount = 0;
         function vFormClose(e){ //e = null - (account deleted), event_popstate (history back), event_click - (close form Button), true - (getMasterPass - reload after inactivity)
             if (e && e.type === "popstate"){
                 if(accountDeleted) app.message.vendorDeleted();
-                if(!e.state){
+                if(e.state.virgin){
                     app.message.exitAppConfirm();
                     setTimeout( _ =>  window.history.pushState({noBackExists: true}, '', ''), 2000);
                 }
@@ -2499,7 +2502,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.509 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.510 ---------------------", true));
     
 
     
