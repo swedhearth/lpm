@@ -793,14 +793,14 @@ const txtBankObj = {
 
             if(!window.history.state){ // No history - first visit
                 window.history.pushState({noBackExists: true}, '', '');
-            }else if(!window.history.state.authorising){// There is state but not authorising - 
-                const goBack = window.history.state.authorised ? 2 : 1
-                console.log("YES STATE", history, goBack);
-                window.history.go(-goBack);
+            }else if(!window.history.state.authorising || !window.history.state.noBackExists){// There is state but not authorising - 
+                //const goBack = window.history.state.authorised ? 2 : 1
+                //console.log("YES STATE", history, goBack);
+                window.history.back();
                 setTimeout(_=> {
                     //window.history.replaceState(null, '', window.location.pathname);
                     this.reload();
-                }, 10000);
+                }, 0);
                 return false;
             }
             return true;
@@ -2499,7 +2499,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.511 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.512 ---------------------", true));
     
 
     
