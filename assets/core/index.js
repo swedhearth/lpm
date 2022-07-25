@@ -796,7 +796,10 @@ const txtBankObj = {
             }else if(!window.history.state.noBackExists){// There is state but not noBackExists - 
                 console.log("YES STATE", history);
                 window.history.go(-window.history.length);
-                setTimeout(this.reload, 100000);
+                setTimeout(_=> {
+                    window.history.replaceState(null, '', window.location.pathname);
+                    this.reload
+                }, 10000);
                 return false;
             }
             return true;
@@ -2493,7 +2496,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.506 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.507 ---------------------", true));
     
 
     
