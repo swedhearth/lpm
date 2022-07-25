@@ -532,68 +532,7 @@ const txtBankObj = {
 }
 
    let txtBank;// = txtBankObj.PL;
-        
-/*     const manifestObj = {
-      "name": "Local Password Manager ver.1.0",
-      "short_name": "LPM",
-      "description": "Manage You Passwords Locally",
-      "id": "https://www.havetogoto.co.uk/index.html",
-      "scope": "https://www.havetogoto.co.uk/",
-      "start_url": "https://www.havetogoto.co.uk/index.html",
-      "display": "standalone",
-      "orientation": "portrait",
-      "theme_color": "#fafafa",
-      "background_color": "#fafafa",
-      "icons": [
-        {
-          "src": "https://www.havetogoto.co.uk/assets/static/icons/micon-48x48.png",
-          "sizes": "48x48",
-          "type": "image/png",
-          "purpose": "maskable any"
-        },
-        {
-          "src": "https://www.havetogoto.co.uk/assets/static/icons/micon-72x72.png",
-          "sizes": "72x72",
-          "type": "image/png",
-          "purpose": "maskable any"
-        },
-        {
-          "src": "https://www.havetogoto.co.uk/assets/static/icons/micon-96x96.png",
-          "sizes": "96x96",
-          "type": "image/png",
-          "purpose": "maskable any"
-        },
-        {
-          "src": "https://www.havetogoto.co.uk/assets/static/icons/micon-128x128.png",
-          "sizes": "128x128",
-          "type": "image/png",
-          "purpose": "maskable any"
-        },
-        {
-          "src": "https://www.havetogoto.co.uk/assets/static/icons/micon-192x192.png",
-          "sizes": "192x192",
-          "type": "image/png",
-          "purpose": "maskable any"
-        },
-        {
-          "src": "https://www.havetogoto.co.uk/assets/static/icons/micon-384x384.png",
-          "sizes": "384x384",
-          "type": "image/png",
-          "purpose": "maskable any"
-        },
-        {
-          "src": "https://www.havetogoto.co.uk/assets/static/icons/micon-512x512.png",
-          "sizes": "512x512",
-          "type": "image/png",
-          "purpose": "maskable any"
-        }
-      ]
-    };
-    const manifestString = JSON.stringify(manifestObj);
-    const manifestBlob = new Blob([manifestString], {type: "application/json"});
-    const manifestUrl = window.URL.createObjectURL(manifestBlob); */
-    // ----------------------------------- End Manifest -----------------------------------------------------//
-    
+
     Date.prototype.toUKstring = function(){
         return this.toLocaleString('en-GB', { timeZone: 'Europe/London' });
     };
@@ -849,6 +788,37 @@ const txtBankObj = {
 
         this.urlReplace = url => {if(url) location.replace(url);};
         this.reload = _ => this.urlReplace(this.URL);// this.urlReplace("https://www.havetogoto.co.uk/"); //  Reload App ************** Make Hard Coded = "https://havetogoto.co.uk"
+        
+        this.checkHistoryState = _ => {
+
+/*             if(window.history.state){
+                console.log("YES STATE", history);
+                window.history.go(-1);
+                setTimeout(this.reload, 0);
+                
+            }else if(!window.history.state || !window.history.state.noBackExists) {
+                console.log("we are not pushing anything to history");
+                window.history.pushState({noBackExists: true}, '', '');
+            }else{
+                console.log("nothing pushed to history", window.history);
+            } */
+            
+            
+            if(!window.history.state){ // No history - first visit
+                window.history.pushState({noBackExists: true}, '', '');
+                return true;
+            }else if(window.history.state.authorising){// Currently authorising redirection - skip
+                console.log("YES STATE - authorising", history);
+                return true;
+            }else if(!window.history.state.noBackExists){// There is state but not noBackExists - 
+                console.log("YES STATE", history);
+                window.history.go(-1);
+                setTimeout(this.reload, 0);
+                return false;
+            }
+            return true;
+        }
+        
         this.getEncodedDb = async _ => _encodedDb = _encodedDb || _getNewEncodedDb();
         this.getDbFileBlob = _ => this.getEncodedDb().then(encodedDb => new Blob([encodedDb.buffer], {type:"application/octet-stream"}));
         this.setDbObj = function(dbObj){
@@ -2029,13 +1999,18 @@ let appStartFailCount = 0;
     }
     
     // -------------------------- Add  listeners --------------------------------------
-    if(window.history.state && window.history.state.modOpen){
-        window.history.go(-history.length);
+
+/*     if(window.history.state){
+        console.log("YES STATE", history);
+        window.history.go(-1);
+        setTimeout(app.reload, 0);
+        
     }else if(!window.history.state || !window.history.state.noBackExists) {
+        console.log("we are not pushing anything to history");
         window.history.pushState({noBackExists: true}, '', '');
     }else{
         console.log("nothing pushed to history", window.history);
-    }
+    } */
 
         document.addEventListener("visibilitychange", app.visibilitychange());
         window.addEventListener('popstate', vForm.close);
@@ -2274,7 +2249,8 @@ let appStartFailCount = 0;
                     navigator.clipboard.writeText(dbxAuth.codeVerifier);
                 }
                 if(thisApp.dbObj && thisApp.idxDb) thisApp.idxDb.put("dbxSyncExisting", await thisApp.getEncodedDb());
-
+                // Set History State Here!!!!!!
+                window.history.replaceState({authorising: true}, '', window.location.pathname);
                 thisApp.urlReplace(authUrl);
             }catch(e){
                 this.catchSync(e).then(e => thisApp.start(e, true));
@@ -2335,23 +2311,27 @@ let appStartFailCount = 0;
                 readDbxFile().then(thisApp.paint).catch(this.catchLoad);
             }
         }
+
         
         const redirect = async _ => {
             if(!thisApp.online) return this.syncPause().then(thisApp.alert.offline);
             const urlSearchParams = Object.fromEntries(new URLSearchParams(window.location.search.substring(1)));
+            //window.history.replaceState(null, null, window.location.pathname);
             /* console.log(urlSearchParams); */
-            if(urlSearchParams.error) return null;
+            //if(urlSearchParams.error || !urlSearchParams.code) return null;
             let dbxCodeVerifier = null;
             if(urlSearchParams.code){
+                window.history.replaceState({authorised: true}, '', window.location.pathname);
                 if(thisApp.sessionStorage){
                     dbxCodeVerifier = thisApp.sessionStorage.getItem('dbxCodeVerifier');
                     thisApp.sessionStorage.clear();
                 }else{
                     dbxCodeVerifier = await navigator.clipboard.readText();
                 }
+                if(!dbxCodeVerifier) return thisApp.reload();
             }
             
-            if(!dbxCodeVerifier || !urlSearchParams.code) return null;
+            if(!dbxCodeVerifier || !urlSearchParams.code || urlSearchParams.error) return null; //thisApp.checkHistoryState(); //null;
             return await getRefreshFromCode(urlSearchParams.code, dbxCodeVerifier);// NEW ACCOUNT - NEW JOIN
         }
         
@@ -2536,7 +2516,9 @@ let appStartFailCount = 0;
     }
 
 /* ------------------------------------------------------------------------------*/
-    installServiceWorker(); // Install Service Worker
+    if(!app.checkHistoryState()) return;
+    
+    if(location.host) installServiceWorker(); // Install Service Worker
     
      app.setUp({
         local: new Local(app),
@@ -2629,7 +2611,7 @@ let appStartFailCount = 0;
             
             console.log(terra);
             console.log(Terra); */
-            console.log(terraWallets);
+            //console.log(terraWallets);
         },10000);
         
 })();
