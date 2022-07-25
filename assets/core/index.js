@@ -794,8 +794,9 @@ const txtBankObj = {
             if(!window.history.state){ // No history - first visit
                 window.history.pushState({noBackExists: true}, '', '');
             }else if(!window.history.state.authorising){// There is state but not authorising - 
-                console.log("YES STATE", history);
-                window.history.go(-1);
+                const goBack = window.history.state.authorised ? 3 : 2
+                console.log("YES STATE", history, goBack);
+                window.history.go(-goBack);
                 setTimeout(_=> {
                     //window.history.replaceState(null, '', window.location.pathname);
                     this.reload();
@@ -2498,7 +2499,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.508 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.509 ---------------------", true));
     
 
     
