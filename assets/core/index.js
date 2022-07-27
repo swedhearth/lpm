@@ -1,5 +1,20 @@
 (function(){
 "use strict";
+
+/* 
+
+
+TO DO:
+- One Drive Integration
+- Google Drive Integration
+- Private Browsing - fix and make it sleeker
+- fix multilanguage
+- error catching test
+- decide on payment/supportDonate 
+
+
+*/
+
 const nowPaymentApiKey = "FFW7176-YJHM50Y-HZZTY9S-S2KNAE4";
 
 async function getData(url = '') {
@@ -206,7 +221,7 @@ const txtBankObj = {
                 "syncLocalIcon": "Polaczenie Podrecznej Bazy Danych",
                 "syncDbxFileIcon": "Polaczenie Bazy Danych Dropbox",
                 "syncLocalFileIcon": "Polaczenie Zapasowego Pliku Bazy Danych",
-                "reloadApp": "Odswiez Aplikacje",
+                "reloadApp": "Wyloguj Sie / Odswiez Aplikacje",
                 "changeMasterPassBtn": "Zmien Haslo Bazy Danych",
                 "emergDb": "Stworz Awaryjna Kopie Bazy Danych",
                 "moreTaskbarClose": "Zamknij Wiecej Opcji",
@@ -457,7 +472,7 @@ const txtBankObj = {
                 "syncLocalIcon": "Quick Access Database Connection",
                 "syncDbxFileIcon": "Dropbox Database Connection",
                 "syncLocalFileIcon": "Database Backup File Connection",
-                "reloadApp": "Reload the App",
+                "reloadApp": "Log Out / Reload the App",
                 "changeMasterPassBtn": "Change Application Database Password",
                 "emergDb": "Create Emergency Copy",
                 "moreTaskbarClose": "Close More Options",
@@ -2493,13 +2508,13 @@ let appStartFailCount = 0;
 /* ------------------------------------------------------------------------------*/
     
     
-    if(location.host) installServiceWorker(); // Install Service Worker
+     installServiceWorker(); // Install Service Worker
     
      app.setUp({
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.512 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.513 ---------------------", true));
     
 
     
@@ -2514,7 +2529,7 @@ let appStartFailCount = 0;
 
     function installServiceWorker(){
         console.log("are we installServiceWorker?");
-        if(!navigator.serviceWorker || !navigator.onLine) return;//Alert?
+        if(!navigator.serviceWorker || !navigator.onLine || !location.host) return console.log("navigator.serviceWorker: ", navigator.serviceWorker, " | navigator.onLine: ", navigator.onLine, " | location.host: ", location.host);
         console.log("YES we are installServiceWorker?");
         async function onstateChange(){
             switch (this.state) {// Has service worker state changed?
