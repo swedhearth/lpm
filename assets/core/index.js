@@ -2515,7 +2515,7 @@ let appStartFailCount = 0;
         local: new Local(app),
         dbxFile: new DbxFile(app),
         localFile: new LocalFile(app)
-    }).then(_ => app.start("-------------------Service Worker core_1.513 ---------------------", true));
+    }).then(_ => app.start("-------------------Service Worker core_1.514 ---------------------", true));
     
 
     
