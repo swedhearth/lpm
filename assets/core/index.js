@@ -812,11 +812,10 @@ const txtBankObj = {
                 //const goBack = window.history.state.authorised ? 2 : 1
                 //console.log("YES STATE", history, goBack);
                 window.history.back();
-                setTimeout(_=> {
-                    //window.history.replaceState(null, '', window.location.pathname);
+/*                 setTimeout(_=> {
                     this.reload();
                 }, 0);
-                return false;
+                return false; */
             }
             return true;
         }
@@ -2275,7 +2274,9 @@ let appStartFailCount = 0;
                 }
                 return this.update();
             }
+            //////////////////////////////////////////////////////////make it as try catch - to avoid double request from dropbox (filesListFolder and filesDownload)
             const response = await dbx.filesDownload({path: '/lpm.db'});
+            
             const encodedDbxFileContent = await response.result.fileBlob.arrayBuffer();
             const dbxDbObj = await decodeToJson(encodedDbxFileContent);
             if(!thisApp.dbObj) thisApp.dbObj = dbxDbObj; // dropbox database loaded from button after redirect or from local handler if no local db is stored
